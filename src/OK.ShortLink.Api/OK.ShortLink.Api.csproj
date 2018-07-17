@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OK.ShortLink.Common\OK.ShortLink.Common.csproj" />
+    <ProjectReference Include="..\OK.ShortLink.Core\OK.ShortLink.Core.csproj" />
+    <ProjectReference Include="..\OK.ShortLink.DataAccess\OK.ShortLink.DataAccess.csproj" />
+    <ProjectReference Include="..\OK.ShortLink.Engine\OK.ShortLink.Engine.csproj" />
+  </ItemGroup>
+
+</Project>
