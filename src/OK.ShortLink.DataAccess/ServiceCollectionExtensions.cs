@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OK.ShortLink.Core.Repositories;
 using OK.ShortLink.DataAccess.EntityFramework.DataContexts;
+using OK.ShortLink.DataAccess.EntityFramework.Repositories;
 
 namespace OK.ShortLink.DataAccess
 {
@@ -14,6 +16,11 @@ namespace OK.ShortLink.DataAccess
             });
 
             services.BuildServiceProvider().GetService<ShortLinkDataContext>().Database.Migrate();
+
+            services.AddTransient<ILinkRepository, LinkRepository>();
+            services.AddTransient<ILogRepository, LogRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IVisitorRepository, VisitorRepository>();
         }
     }
 }
