@@ -12,7 +12,7 @@ namespace OK.ShortLink.Common.Entities
 
         public string DeviceInfo { get; set; }
 
-        public string BrowserIndo { get; set; }
+        public string BrowserInfo { get; set; }
 
         public virtual LinkEntity Link { get; set; }
     }
