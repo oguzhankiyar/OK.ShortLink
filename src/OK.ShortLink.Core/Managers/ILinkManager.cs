@@ -13,8 +13,8 @@ namespace OK.ShortLink.Core.Managers
 
         LinkModel CreateLink(int userId, string name, string description, string shortUrl, string originalUrl, bool isActive);
 
-        LinkModel EditLink(int userId, int id, string name, string description, string shortUrl, string originalUrl, bool isActive);
+        bool EditLink(int userId, int id, string name, string description, string shortUrl, string originalUrl, bool isActive);
 
-        LinkModel DeleteLink(int userId, int id);
+        bool DeleteLink(int userId, int id);
     }
 }
