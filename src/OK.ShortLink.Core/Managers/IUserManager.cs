@@ -11,7 +11,7 @@ namespace OK.ShortLink.Core.Managers
 
         UserModel LoginUser(string username, string password);
 
-        UserModel CreateUser(string username, string password, bool isActive);
+        UserModel CreateUser(int userId, string username, string password, bool isActive);
 
         bool EditUserPassword(int userId, int id, string password);
 
