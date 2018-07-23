@@ -1,6 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Content Include="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="4.5.7" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OK.ShortLink.Common\OK.ShortLink.Common.csproj" />
     <ProjectReference Include="..\OK.ShortLink.Core\OK.ShortLink.Core.csproj" />
     <ProjectReference Include="..\OK.ShortLink.DataAccess\OK.ShortLink.DataAccess.csproj" />
