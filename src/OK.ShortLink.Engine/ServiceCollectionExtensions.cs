@@ -2,8 +2,10 @@
 using OK.ShortLink.Common.Entities;
 using OK.ShortLink.Common.Models;
 using OK.ShortLink.Core.Logging;
+using OK.ShortLink.Core.Managers;
 using OK.ShortLink.Core.Mapping;
 using OK.ShortLink.Engine.Logging;
+using OK.ShortLink.Engine.Managers;
 using OK.ShortLink.Engine.Mapping;
 
 namespace OK.ShortLink.Engine
@@ -18,9 +20,15 @@ namespace OK.ShortLink.Engine
 
             services.AddTransient((provider) => { return CreateMappingProfile(); });
             services.AddTransient<IMapper, AutoMapperImpl>();
+
+            services.AddTransient<ILinkManager, LinkManager>();
+            services.AddTransient<IUserManager, UserManager>();
+            services.AddTransient<IVisitorManager, VisitorManager>();
         }
 
-        public static AutoMapper.Profile CreateMappingProfile()
+        #region Helpers
+
+        private static AutoMapper.Profile CreateMappingProfile()
         {
             var mappingProfile = new MappingProfile();
 
@@ -35,5 +43,7 @@ namespace OK.ShortLink.Engine
 
             return mappingProfile;
         }
+        
+        #endregion
     }
 }
