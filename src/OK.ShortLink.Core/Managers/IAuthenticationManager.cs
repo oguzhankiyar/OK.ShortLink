@@ -7,6 +7,8 @@ namespace OK.ShortLink.Core.Managers
     {
         string CreateToken(int userId, string issuer, string key, int expiresInMs);
 
+        int? GetUserIdByPrincipal(ClaimsPrincipal principal);
+
         UserModel VerifyPrincipal(ClaimsPrincipal principal);
     }
 }

@@ -9,7 +9,7 @@ namespace OK.ShortLink.Api.Controllers
 {
     [Route("api/auth")]
     [ApiController]
-    public class AuthenticationController : ControllerBase
+    public class AuthenticationController : BaseController
     {
         private readonly IUserManager _userManager;
         private readonly IAuthenticationManager _authenticationManager;
@@ -21,7 +21,7 @@ namespace OK.ShortLink.Api.Controllers
             _authenticationManager = authenticationManager;
             _configuration = configuration;
         }
-
+        
         [HttpPost]
         public ActionResult<AuthenticationResponse> Authenticate([FromBody] AuthenticationRequest request)
         {

@@ -37,7 +37,7 @@ namespace OK.ShortLink.Engine.Managers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public UserModel VerifyPrincipal(ClaimsPrincipal principal)
+        public int? GetUserIdByPrincipal(ClaimsPrincipal principal)
         {
             string userIdString = null;
 
@@ -53,7 +53,19 @@ namespace OK.ShortLink.Engine.Managers
                 return null;
             }
 
-            UserModel user = _userManager.GetUserById(userId);
+            return userId;
+        }
+
+        public UserModel VerifyPrincipal(ClaimsPrincipal principal)
+        {
+            int? userId = GetUserIdByPrincipal(principal);
+
+            if (!userId.HasValue)
+            {
+                return null;
+            }
+
+            UserModel user = _userManager.GetUserById(userId.Value);
 
             if (user == null || user.IsActive == false)
             {
