@@ -24,6 +24,7 @@ namespace OK.ShortLink.Engine
             services.AddTransient<ILinkManager, LinkManager>();
             services.AddTransient<IUserManager, UserManager>();
             services.AddTransient<IVisitorManager, VisitorManager>();
+            services.AddTransient<IAuthenticationManager, AuthenticationManager>();
         }
 
         #region Helpers
@@ -43,7 +44,7 @@ namespace OK.ShortLink.Engine
 
             return mappingProfile;
         }
-        
+
         #endregion
     }
 }

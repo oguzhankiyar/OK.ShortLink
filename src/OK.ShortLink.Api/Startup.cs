@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using OK.ShortLink.Api.Middlewares;
 using OK.ShortLink.Core.Logging;
 using OK.ShortLink.DataAccess;
 using OK.ShortLink.Engine;
+using System.Text;
 
 namespace OK.ShortLink.Api
 {
@@ -21,6 +24,21 @@ namespace OK.ShortLink.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ValidAudience = Configuration["Jwt:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                        };
+                    });
+
             services.AddDataAccessLayer(Configuration.GetConnectionString("ShortLinkConnection"));
 
             services.AddEngineLayer();
@@ -42,6 +60,8 @@ namespace OK.ShortLink.Api
 
             logger.SetGlobalProperty("ConnectionString", Configuration.GetConnectionString("ShortLinkConnection"));
             logger.SetGlobalProperty("Channel", "OK.ShortLink.Api");
+            
+            app.UseAuthentication();
 
             app.UseMiddleware<LoggingMiddleware>();
 
