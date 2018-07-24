@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Http.Internal;
+using OK.ShortLink.Common.Models;
 using OK.ShortLink.Core.Logging;
+using OK.ShortLink.Core.Managers;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -21,7 +23,7 @@ namespace OK.ShortLink.Api.Middlewares
             _next = next;
         }
 
-        public async Task Invoke(HttpContext context)
+        public async Task Invoke(HttpContext context, IAuthenticationManager authenticationManager)
         {
             Stopwatch watch = new Stopwatch();
 
@@ -47,6 +49,9 @@ namespace OK.ShortLink.Api.Middlewares
                         context.Request.Body = requestBodyStream;
                         context.Response.Body = responseBodyStream;
 
+                        UserModel authenticatedUser = authenticationManager.VerifyPrincipal(context.User);
+
+                        _logger.SetThreadProperty("UserId", authenticatedUser?.Id);
                         _logger.SetThreadProperty("RequestId", Guid.NewGuid().ToString());
                         _logger.SetThreadProperty("IPAddress", context.Connection.RemoteIpAddress.MapToIPv4().ToString());
                         _logger.SetThreadProperty("UserAgent", context.Request.Headers["User-Agent"].FirstOrDefault());
