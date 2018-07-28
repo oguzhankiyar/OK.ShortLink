@@ -44,7 +44,7 @@ namespace OK.ShortLink.Api
 
             services.AddEngineLayer();
 
-            services.AddMvc(options => { options.Filters.Add(new ModelStateValidationFilter()); })
+            services.AddMvc(options => { options.Filters.Add(new ValidateModelActionFilter()); })
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
