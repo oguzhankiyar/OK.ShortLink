@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using OK.ShortLink.Api.Filters;
 using OK.ShortLink.Api.Middlewares;
 using OK.ShortLink.Core.Logging;
 using OK.ShortLink.DataAccess;
@@ -43,7 +44,7 @@ namespace OK.ShortLink.Api
 
             services.AddEngineLayer();
 
-            services.AddMvc()
+            services.AddMvc(options => { options.Filters.Add(new ModelStateValidationFilter()); })
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -60,7 +61,7 @@ namespace OK.ShortLink.Api
 
             logger.SetGlobalProperty("ConnectionString", Configuration.GetConnectionString("ShortLinkConnection"));
             logger.SetGlobalProperty("Channel", "OK.ShortLink.Api");
-            
+
             app.UseAuthentication();
 
             app.UseMiddleware<LoggingMiddleware>();
