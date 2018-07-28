@@ -3,6 +3,7 @@ using OK.ShortLink.Core.Managers;
 
 namespace OK.ShortLink.Api.Controllers
 {
+    [ApiController]
     public abstract class BaseController : ControllerBase
     {
         protected int? CurrentUserId
