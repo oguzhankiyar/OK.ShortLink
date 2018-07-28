@@ -7,39 +7,36 @@ using OK.ShortLink.Core.Managers;
 
 namespace OK.ShortLink.Api.Controllers
 {
-    [Route("api/auth")]
-    [ApiController]
-    public class AuthenticationController : BaseController
+    [Route("api/[controller]")]
+    public class AuthController : BaseController
     {
         private readonly IUserManager _userManager;
         private readonly IAuthenticationManager _authenticationManager;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationController(IUserManager userManager, IAuthenticationManager authenticationManager, IConfiguration configuration)
+        public AuthController(IUserManager userManager, IAuthenticationManager authenticationManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _authenticationManager = authenticationManager;
             _configuration = configuration;
         }
-        
+
         [HttpPost]
-        public ActionResult<AuthenticationResponse> Authenticate([FromBody] AuthenticationRequest request)
+        public IActionResult CreateToken([FromBody] CreateTokenRequest request)
         {
             UserModel user = _userManager.LoginUser(request.Username, request.Password);
 
             if (user == null)
             {
-                return NotFound();
+                return BadRequest("Username or password is incorrect.");
             }
 
-            AuthenticationResponse response = new AuthenticationResponse();
+            CreateTokenResponse response = new CreateTokenResponse();
 
-            response.Code = 200;
-            response.Message = "The user is authenticated successfuly.";
             response.Token = CreateUserToken(user);
             response.ExpiresIn = int.Parse(_configuration["Jwt:ExpiresInMs"]);
 
-            return response;
+            return Ok(response);
         }
 
         #region Helpers

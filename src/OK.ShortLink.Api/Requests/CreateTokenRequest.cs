@@ -1,6 +1,6 @@
 ﻿namespace OK.ShortLink.Api.Requests
 {
-    public class AuthenticationRequest
+    public class CreateTokenRequest
     {
         public string Username { get; set; }
 

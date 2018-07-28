@@ -1,6 +1,6 @@
 ﻿namespace OK.ShortLink.Api.Responses
 {
-    public class AuthenticationResponse : BaseResponse
+    public class CreateTokenResponse
     {
         public string Token { get; set; }
 
