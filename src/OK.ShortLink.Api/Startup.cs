@@ -64,7 +64,11 @@ namespace OK.ShortLink.Api
 
             app.UseAuthentication();
 
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseMiddleware<UserIdentifierMiddleware>();
+            app.UseMiddleware<RequestInformationMiddleware>();
             app.UseMiddleware<LoggingMiddleware>();
+            app.UseMiddleware<ElapsedTimeMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseMvc();
