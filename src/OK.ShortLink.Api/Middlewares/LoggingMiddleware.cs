@@ -60,19 +60,19 @@ namespace OK.ShortLink.Api.Middlewares
 
         private async Task<string> ReadRequestBody(HttpRequest request)
         {
-            var body = request.Body;
+            using (StreamReader reader = new StreamReader(request.Body))
+            {
+                string bodyAsText = await reader.ReadToEndAsync();
+                
+                MemoryStream requestBodyStream = new MemoryStream();
+                byte[] bytesToWrite = Encoding.UTF8.GetBytes(bodyAsText);
+                await requestBodyStream.WriteAsync(bytesToWrite, 0, bytesToWrite.Length);
+                requestBodyStream.Seek(0, SeekOrigin.Begin);
 
-            request.EnableRewind();
+                request.Body = requestBodyStream;
 
-            byte[] buffer = new byte[Convert.ToInt32(request.ContentLength)];
-
-            await request.Body.ReadAsync(buffer, 0, buffer.Length);
-
-            string bodyAsText = Encoding.UTF8.GetString(buffer);
-
-            request.Body = body;
-
-            return bodyAsText;
+                return bodyAsText;
+            }
         }
 
         private async Task<string> ReadResponseBody(HttpResponse response)
