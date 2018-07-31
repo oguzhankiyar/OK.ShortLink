@@ -46,6 +46,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
         alert(message);
       } else if (err.status === 401) {
+        this.authService.logout();
         alert('Unauthorized! Please login!');
       } else if (err.status === 404) {
         alert('Not Found! Please try again!');
