@@ -55,22 +55,22 @@ namespace OK.ShortLink.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, null);
         }
 
-        [HttpPut]
-        public IActionResult Edit([FromBody] EditUserRequest model)
+        [HttpPut("{id}")]
+        public IActionResult Edit([FromRoute] int id, [FromBody] EditUserRequest model)
         {
             bool isEdited = false;
 
             if (string.IsNullOrEmpty(model.Password))
             {
-                isEdited = _userManager.EditUserActivation(CurrentUserId.Value, model.Id, model.IsActive.Value);
+                isEdited = _userManager.EditUserActivation(CurrentUserId.Value, id, model.IsActive.Value);
             }
             else if (model.IsActive == null)
             {
-                isEdited = _userManager.EditUserPassword(CurrentUserId.Value, model.Id, model.Password);
+                isEdited = _userManager.EditUserPassword(CurrentUserId.Value, id, model.Password);
             }
             else
             {
-                isEdited = _userManager.EditUser(CurrentUserId.Value, model.Id, model.Password, model.IsActive.Value);
+                isEdited = _userManager.EditUser(CurrentUserId.Value, id, model.Password, model.IsActive.Value);
             }
 
             if (!isEdited)

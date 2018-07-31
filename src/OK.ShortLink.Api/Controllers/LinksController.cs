@@ -72,12 +72,12 @@ namespace OK.ShortLink.Api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = link.Id }, null);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         [Authorize]
-        public IActionResult Edit([FromBody] EditLinkRequest request)
+        public IActionResult Edit([FromRoute] int id, [FromBody] EditLinkRequest request)
         {
             bool isEdited = _linkManager.EditLink(CurrentUserId.Value,
-                                                  request.Id,
+                                                  id,
                                                   request.Name,
                                                   request.Description,
                                                   request.ShortUrl,
