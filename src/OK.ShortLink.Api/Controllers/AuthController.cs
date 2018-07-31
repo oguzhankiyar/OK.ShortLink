@@ -4,6 +4,7 @@ using OK.ShortLink.Api.Requests;
 using OK.ShortLink.Api.Responses;
 using OK.ShortLink.Common.Models;
 using OK.ShortLink.Core.Managers;
+using System;
 
 namespace OK.ShortLink.Api.Controllers
 {
@@ -34,7 +35,7 @@ namespace OK.ShortLink.Api.Controllers
             CreateTokenResponse response = new CreateTokenResponse();
 
             response.Token = CreateUserToken(user);
-            response.ExpiresIn = int.Parse(_configuration["Jwt:ExpiresInMs"]);
+            response.ExpiresIn = DateTime.Now.AddMilliseconds(int.Parse(_configuration["Jwt:ExpiresInMs"]));
 
             return Ok(response);
         }
