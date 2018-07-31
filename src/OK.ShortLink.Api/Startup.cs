@@ -25,6 +25,17 @@ namespace OK.ShortLink.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors((options) =>
+            {
+                options.AddPolicy("DefaultPolicy", (policy) =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowCredentials()
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -61,6 +72,8 @@ namespace OK.ShortLink.Api
 
             logger.SetGlobalProperty("ConnectionString", Configuration.GetConnectionString("ShortLinkConnection"));
             logger.SetGlobalProperty("Channel", "OK.ShortLink.Api");
+
+            app.UseCors("DefaultPolicy");
 
             app.UseAuthentication();
 
