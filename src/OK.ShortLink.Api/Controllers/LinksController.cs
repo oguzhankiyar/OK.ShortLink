@@ -40,8 +40,8 @@ namespace OK.ShortLink.Api.Controllers
             return Ok(link);
         }
 
-        [HttpGet]
-        public IActionResult GetByShortUrl([FromQuery] string shortUrl)
+        [HttpGet("byshorturl/{shortUrl}")]
+        public IActionResult GetByShortUrl(string shortUrl)
         {
             LinkModel link = _linkManager.GetLinkByShortUrl(shortUrl);
 

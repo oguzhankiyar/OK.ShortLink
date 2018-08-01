@@ -44,7 +44,7 @@ export class LinkService {
     const result: Subject<Link> = new Subject<Link>();
 
     this.httpClient
-      .get<Link>(this.apiEndPoint + '/links?shortUrl=' + shortUrl)
+      .get<Link>(this.apiEndPoint + '/links/byshorturl/' + shortUrl)
       .subscribe(
         (data: Link) => {
           result.next(data);
