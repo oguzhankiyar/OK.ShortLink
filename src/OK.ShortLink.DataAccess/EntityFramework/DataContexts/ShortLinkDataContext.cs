@@ -70,6 +70,7 @@ namespace OK.ShortLink.DataAccess.EntityFramework.DataContexts
             modelBuilder.Entity<LinkEntity>()
                         .HasOne(x => x.User)
                         .WithMany()
+                        .HasForeignKey(nameof(LinkEntity.UserId))
                         .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<LinkEntity>()
@@ -120,6 +121,7 @@ namespace OK.ShortLink.DataAccess.EntityFramework.DataContexts
             modelBuilder.Entity<VisitorEntity>()
                         .HasOne(x => x.Link)
                         .WithMany()
+                        .HasForeignKey(nameof(VisitorEntity.LinkId))
                         .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<VisitorEntity>()
@@ -186,6 +188,7 @@ namespace OK.ShortLink.DataAccess.EntityFramework.DataContexts
             modelBuilder.Entity<LogEntity>()
                         .HasOne(x => x.User)
                         .WithMany()
+                        .HasForeignKey(nameof(LogEntity.UserId))
                         .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<LogEntity>()
