@@ -12,7 +12,9 @@ namespace OK.ShortLink.DataAccess
         {
             services.AddDbContext<ShortLinkDataContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseLazyLoadingProxies();
+
+                options.UseNpgsql(connectionString);
             });
 
             services.BuildServiceProvider().GetService<ShortLinkDataContext>().Database.Migrate();
